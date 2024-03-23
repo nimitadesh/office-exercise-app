@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 // const authRoute = require("./routes/AuthRoute");
 const mongoose = require("mongoose");
 const { MongoClient } = require("mongodb");
-// const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser")
 
 async function connectToDatabase() {
   try {
