@@ -5,9 +5,9 @@ const app = express();
 const port = 3001;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-// const authRoute = require("./routes/AuthRoute");
 const mongoose = require("mongoose");
 const { MongoClient } = require("mongodb");
+const authRoute = require("./routes/AuthRoutes");
 // const bodyParser = require("body-parser");
 
 async function connectToDatabase() {
@@ -30,13 +30,13 @@ async function connectToDatabase() {
     app.use(express.json());
     // app.use(bodyParser.urlencoded({ extended: true }));
 
-    // app.use("/users", require("./routes/userRoutes"));
+    app.use("/users", require("./routes/UserRoutes"));
     // app.use("/projects", require("./routes/projectRoutes"));
     // app.use("/contributions", require("./routes/ContributionsRoutes"));
     // app.use("/likes", require("./routes/likesRoutes"));
     // app.use("/comments", require("./routes/commentRoute"));
 
-    // app.use("/", authRoute);
+    app.use("/", authRoute);
 
     // TODO - remove later
     app.get("/test", (req, res) => {
