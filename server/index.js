@@ -7,7 +7,6 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const { MongoClient } = require("mongodb");
-const authRoute = require("./routes/AuthRoutes");
 // const bodyParser = require("body-parser");
 
 async function connectToDatabase() {
@@ -30,18 +29,9 @@ async function connectToDatabase() {
     app.use(express.json());
     // app.use(bodyParser.urlencoded({ extended: true }));
 
+    app.use("/", require("./routes/AuthRoutes"));
     app.use("/users", require("./routes/UserRoutes"));
-    // app.use("/projects", require("./routes/projectRoutes"));
-    // app.use("/contributions", require("./routes/ContributionsRoutes"));
-    // app.use("/likes", require("./routes/likesRoutes"));
-    // app.use("/comments", require("./routes/commentRoute"));
-
-    app.use("/", authRoute);
-
-    // TODO - remove later
-    app.get("/test", (req, res) => {
-      res.send("This is a test endpoint");
-    });
+    app.use("/workouts", require("./routes/WorkoutRoutes"));
 
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
