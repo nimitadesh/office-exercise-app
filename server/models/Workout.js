@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const workoutSchema = new mongoose.Schema({
+const exerciseSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -17,11 +17,24 @@ const workoutSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+  },
 });
 
-workoutSchema.path("title").checkRequired((v) => v != null);
-workoutSchema.path("description").checkRequired((v) => v != null);
-workoutSchema.path("duration").checkRequired((v) => v != null);
-workoutSchema.path("type").checkRequired((v) => v != null);
+const workoutSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  imageUrl: {
+    type: String,
+  },
+  exercises: [exerciseSchema],
+});
 
 module.exports = mongoose.model("Workout", workoutSchema);
