@@ -1,7 +1,11 @@
 import React from "react";
 import "../../styles/app-styles.css";
 import WorkoutPopup from "../workout/WorkoutPopup";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import HeroSection from "./HomeComp/HeroSection";
+import BannerSection from "./HomeComp/BannerSection";
+import FooterSection from "./HomeComp/FooterSection";
+
 
 const testWorkout = {
   title: "Full Body Workout",
@@ -41,18 +45,38 @@ const testWorkout = {
   ],
 };
 
+const theme = extendTheme ({
+  fonts: {
+    heading: 'Inria Sans, sans-serif',
+    body: 'Inria Sans, sans-serif',
+  },
+})
+
 const HomePage = () => {
   return (
     <div>
-      <header className="header">
+      {/* <header className="header">
         <div className="logo">UpFit</div>
         <nav className="navigation">
           <button className="loginButton">Login</button>
           <button className="signupButton">Signup</button>
         </nav>
-      </header>
+      </header> */}
+
       <ChakraProvider>
+        <HeroSection />
+      </ChakraProvider>
+
+      <ChakraProvider>
+        <BannerSection />
+      </ChakraProvider>
+
+      {/* <ChakraProvider>
         <WorkoutPopup workout={testWorkout} />
+      </ChakraProvider> */}
+
+      <ChakraProvider>
+        <FooterSection />
       </ChakraProvider>
     </div>
   );
