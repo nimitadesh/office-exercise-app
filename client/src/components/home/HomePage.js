@@ -1,13 +1,12 @@
 import WorkoutCard from "./WorkoutCard";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "../../styles/app-styles.css";
 import WorkoutPopup from "../workout/WorkoutPopup";
-import { ChakraProvider, extendTheme,Box } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, Box } from "@chakra-ui/react";
 import HeroSection from "./HomeComp/HeroSection";
 import FooterSection from "./HomeComp/FooterSection";
 import BannerPic from "./HomeComp/Banner/BannerPic";
 import BannerText from "./HomeComp/Banner/BannerText";
-import { ChakraProvider } from "@chakra-ui/react";
 import WorkoutGallery from "./WorkoutGallery";
 
 const workouts = [
@@ -101,7 +100,7 @@ const HomePage = () => {
 
   return (
     <div >
-          {/* <div>
+      {/* <div>
       <header className="header">
     <div > */}
       {/* <header className="header">
@@ -127,16 +126,21 @@ const HomePage = () => {
 
       <ChakraProvider backgroundColor={'#57663D'}>
         <Box position="relative" height="auto">
-        <HeroSection />
+          <HeroSection />
           <BannerText />
-          <Box position="absolute" top="1000" left="0" right="0" bottom="0">
+          <Box position="absolute" top="850" left="0" right="0" bottom="0">
             <BannerPic />
           </Box>
         </Box>
-        <FooterSection />
       </ChakraProvider>
-      <WorkoutCard workout={testWorkout} onClick={handleOpen} />
+
       <WorkoutGallery workouts={workouts} />
+
+      <ChakraProvider>        <FooterSection />
+      </ChakraProvider>
+
+      <WorkoutCard workout={testWorkout} onClick={handleOpen} />
+
     </div>
   );
 };

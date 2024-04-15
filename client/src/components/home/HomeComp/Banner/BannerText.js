@@ -26,7 +26,7 @@ export default function BannerText() {
                 </Stack>
             </Box>
 
-            <Container h={'600px'} maxW={'full'} paddingTop={'20px'} paddingLeft={'700px'} backgroundColor={'#8C9E6C'}>
+            <Container h={'300px'} maxW={'full'} paddingTop={'30px'} paddingLeft={'700px'} backgroundColor={'#8C9E6C'}>
                 <SimpleGrid columns={{ base: 1, md: 2 }} spacing={5}>
                     {stats.map((stat) => (
                         <Box key={stat.title}>
