@@ -1,11 +1,11 @@
 import React from "react";
 import "../../styles/app-styles.css";
 import WorkoutPopup from "../workout/WorkoutPopup";
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme,Box } from "@chakra-ui/react";
 import HeroSection from "./HomeComp/HeroSection";
-import BannerSection from "./HomeComp/BannerSection";
 import FooterSection from "./HomeComp/FooterSection";
-
+import BannerPic from "./HomeComp/Banner/BannerPic";
+import BannerText from "./HomeComp/Banner/BannerText";
 
 const testWorkout = {
   title: "Full Body Workout",
@@ -45,7 +45,7 @@ const testWorkout = {
   ],
 };
 
-const theme = extendTheme ({
+const theme = extendTheme({
   fonts: {
     heading: 'Inria Sans, sans-serif',
     body: 'Inria Sans, sans-serif',
@@ -54,7 +54,7 @@ const theme = extendTheme ({
 
 const HomePage = () => {
   return (
-    <div>
+    <div >
       {/* <header className="header">
         <div className="logo">UpFit</div>
         <nav className="navigation">
@@ -63,19 +63,18 @@ const HomePage = () => {
         </nav>
       </header> */}
 
-      <ChakraProvider>
-        <HeroSection />
-      </ChakraProvider>
-
-      <ChakraProvider>
-        <BannerSection />
-      </ChakraProvider>
-
       {/* <ChakraProvider>
         <WorkoutPopup workout={testWorkout} />
       </ChakraProvider> */}
 
-      <ChakraProvider>
+      <ChakraProvider backgroundColor={'#57663D'}>
+        <Box position="relative" height="auto">
+        <HeroSection />
+          <BannerText />
+          <Box position="absolute" top="1000" left="0" right="0" bottom="0">
+            <BannerPic />
+          </Box>
+        </Box>
         <FooterSection />
       </ChakraProvider>
     </div>

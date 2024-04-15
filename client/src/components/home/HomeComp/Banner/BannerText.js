@@ -4,15 +4,11 @@ import {
     Container,
     Heading,
     SimpleGrid,
-    Icon,
     Text,
     Stack,
-    HStack
 } from '@chakra-ui/react'
-import { CheckIcon } from '@chakra-ui/icons'
 
-
-export default function BannerSection() {
+export default function BannerText() {
     return (
         <Box>
             <Box h={'240px'} paddingLeft={'700px'} paddingTop={'30px'} backgroundColor={'#D9D9D9'}>
