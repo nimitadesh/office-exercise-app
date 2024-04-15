@@ -1,5 +1,12 @@
 import React, { useState, useRef } from "react";
-import { Box, Button, Progress, Divider, Container } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Progress,
+  Divider,
+  Container,
+  Text,
+} from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import WorkoutComplete from "./WorkoutComplete";
 import styled from "@emotion/styled";
@@ -44,11 +51,13 @@ function WorkoutStepper({ workout }) {
       />
       {!reachedEndOfWorkout && (
         <>
-          <Box position="relative" padding="8">
-            <Divider />
-            <AbsoluteCenter bg="white" px="4">
+          <Box position="relative" padding="3">
+            <Text fontSize="2xl" align="center" padding="3">
               {workout.exercises[currWorkoutIndex].title}
-            </AbsoluteCenter>
+            </Text>
+            <Box position="relative" padding="3">
+              {workout.exercises[currWorkoutIndex].description}
+            </Box>
           </Box>
           <Box position="relative" padding="3">
             <Container centerContent={true}>

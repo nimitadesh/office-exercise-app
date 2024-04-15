@@ -9,10 +9,6 @@ const exerciseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  duration: {
-    type: Number,
-    required: true,
-  },
   type: {
     type: String,
     required: true,
@@ -29,6 +25,10 @@ const workoutSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+    required: true,
+  },
+  points: {
+    type: Number,
     required: true,
   },
   imageUrl: {
