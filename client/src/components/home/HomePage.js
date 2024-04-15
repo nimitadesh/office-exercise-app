@@ -55,6 +55,18 @@ const theme = extendTheme({
 const HomePage = () => {
   return (
     <div >
+          {/* <div>
+      <header className="header">
+    <div > */}
+      {/* <header className="header">
+        <div className="logo">UpFit</div>
+        <nav className="navigation">
+          <button className="loginButton">Login</button>
+          <button className="signupButton">Signup</button>
+        </nav>
+      </header>
+      <ChakraProvider>
+      </header> */}
       {/* <header className="header">
         <div className="logo">UpFit</div>
         <nav className="navigation">
