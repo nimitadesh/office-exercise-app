@@ -8,11 +8,15 @@ import {
     Image,
     Stack,
     Text,
+    useDisclosure
 } from '@chakra-ui/react';
+import SignupCard from '../../sign-up/SignupCard';
 
 const src_bg = 'https://images.unsplash.com/photo-1487956382158-bb926046304a?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
 export default function HeroSection() {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     return (
         <div>
             <Stack w={'full'} h={'1117px'} backgroundImage={src_bg} backgroundSize={'cover'} backgroundPosition={'center center'} minH={'100vh'} direction={{ base: 'column', md: 'row' }}>
@@ -35,23 +39,28 @@ export default function HeroSection() {
                             </Text>
                             <Box maxW="full" h="25px" />
                             <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
-                                <Button
-                                    w={'250px'}
-                                    h={'50px'}
-                                    rounded={'10'}
-                                    bg={'#E9EC4D'}
-                                    color={'#57663D'}
-                                    _hover={{
-                                        bg: 'white',
-                                    }}
-                                    fontFamily={'Inria Sans'} fontSize={'28px'}>
-                                    Sign-up Free
-                                </Button>
+                                <div>
+                                    <Button
+                                        w={'250px'}
+                                        h={'50px'}
+                                        rounded={'10'}
+                                        bg={'#E9EC4D'}
+                                        color={'#57663D'}
+                                        _hover={{
+                                            bg: 'white',
+                                        }}
+                                        fontFamily={'Inria Sans'} 
+                                        fontSize={'28px'} 
+                                        onClick={onOpen}>
+                                        Sign-up Free
+                                    </Button>
+                                    <SignupCard isOpen={isOpen} onClose={onClose} />
+                                </div>
                             </Stack>
                         </div>
                     </Stack>
                 </Flex>
-                <div style={{position: 'relative', height: '500px', width: '500px' }}>
+                <div style={{ position: 'relative', height: '500px', width: '500px' }}>
                     <Image
                         alt={'First Image'}
                         src={'https://via.placeholder.com/150'}
@@ -78,7 +87,7 @@ export default function HeroSection() {
                             width: '300px',
                             height: '450px',
                         }}
-                        zIndex= '1'
+                        zIndex='1'
                     />
                 </div>
             </Stack>
