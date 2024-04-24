@@ -1,9 +1,10 @@
 import WorkoutCard from "./WorkoutCard";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../styles/app-styles.css";
 import WorkoutPopup from "../workout/WorkoutPopup";
 import { ChakraProvider, extendTheme, Box } from "@chakra-ui/react";
 import HeroSection from "./HomeComp/HeroSection";
+import Navbar from "./HomeComp/Navbar";
 import FooterSection from "./HomeComp/FooterSection";
 import BannerPic from "./HomeComp/Banner/BannerPic";
 import BannerText from "./HomeComp/Banner/BannerText";
@@ -13,23 +14,23 @@ const workouts = [
   {
     title: "Morning Yoga Routine",
     description: "Start your day with these energizing yoga poses.",
-    imageUrl: "https://via.placeholder.com/550x260"
+    imageUrl: "https://via.placeholder.com/550x260",
   },
   {
     title: "Cardio Blast",
     description: "A high-intensity cardio workout to boost your heart rate.",
-    imageUrl: "https://via.placeholder.com/550x260"
+    imageUrl: "https://via.placeholder.com/550x260",
   },
   {
     title: "Strength Training",
     description: "Build strength and muscle with these resistance exercises.",
-    imageUrl: "https://via.placeholder.com/550x260"
+    imageUrl: "https://via.placeholder.com/550x260",
   },
   {
     title: "Strength Training",
     description: "Build strength and muscle with these resistance exercises.",
-    imageUrl: "https://via.placeholder.com/550x260"
-  }
+    imageUrl: "https://via.placeholder.com/550x260",
+  },
 ];
 
 const testWorkout = {
@@ -85,46 +86,34 @@ const testWorkout = {
 
 const theme = extendTheme({
   fonts: {
-    heading: 'Inria Sans, sans-serif',
-    body: 'Inria Sans, sans-serif',
+    heading: "Inria Sans, sans-serif",
+    body: "Inria Sans, sans-serif",
   },
-})
+});
 
 const HomePage = () => {
-
   const [isOpen, setIsOpen] = useState(false);
+  const [workoutsFromDb, setWorkoutsFromDb] = useState([]);
   const handleOpen = () => {
     setIsOpen(true);
   };
 
+  useEffect(() => {
+    fetch("http://localhost:3001/workouts")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        setWorkoutsFromDb(data);
+      });
+  }, []);
+
+  console.log(workoutsFromDb);
 
   return (
-    <div >
-      {/* <div>
-      <header className="header">
-    <div > */}
-      {/* <header className="header">
-        <div className="logo">UpFit</div>
-        <nav className="navigation">
-          <button className="loginButton">Login</button>
-          <button className="signupButton">Signup</button>
-        </nav>
-      </header>
-      <ChakraProvider>
-      </header> */}
-      {/* <header className="header">
-        <div className="logo">UpFit</div>
-        <nav className="navigation">
-          <button className="loginButton">Login</button>
-          <button className="signupButton">Signup</button>
-        </nav>
-      </header> */}
-
-      {/* <ChakraProvider>
-        <WorkoutPopup workout={testWorkout} />
-      </ChakraProvider> */}
-
-      <ChakraProvider backgroundColor={'#57663D'}>
+    <div>
+      <ChakraProvider backgroundColor={"#57663D"}>
+        <Navbar />
         <Box position="relative" height="auto">
           <HeroSection />
           <BannerText />
@@ -134,13 +123,24 @@ const HomePage = () => {
         </Box>
       </ChakraProvider>
 
-      <WorkoutGallery workouts={workouts} />
+      <Box position="relative" margin="30">
+        <WorkoutGallery workouts={workoutsFromDb} />
+      </Box>
 
-      <ChakraProvider>        <FooterSection />
+      {/* {workoutsFromDb.map((workout, index) => (
+        <WorkoutCard
+          key={index}
+          workout={workout}
+          onClick={() => console.log("Open workout:", workout.title)}
+        />
+      ))} */}
+
+      {/* <WorkoutCard workout={testWorkout} /> */}
+
+      <ChakraProvider>
+        {" "}
+        <FooterSection />
       </ChakraProvider>
-
-      <WorkoutCard workout={testWorkout} onClick={handleOpen} />
-
     </div>
   );
 };

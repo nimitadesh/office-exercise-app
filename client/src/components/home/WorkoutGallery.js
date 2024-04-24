@@ -1,6 +1,6 @@
-import React from 'react';
-import WorkoutCard from './WorkoutCard'; // Ensure this is the correct path
-import styled from 'styled-components';
+import React from "react";
+import WorkoutCard from "./WorkoutCard"; // Ensure this is the correct path
+import styled from "styled-components";
 
 const ScrollContainer = styled.div`
   display: flex;
@@ -10,17 +10,17 @@ const ScrollContainer = styled.div`
 `;
 
 function WorkoutGallery({ workouts }) {
-    return (
-        <ScrollContainer>
-            {workouts.map((workout, index) => (
-                <WorkoutCard
-                    key={index}
-                    workout={workout}
-                    onClick={() => console.log('Open workout:', workout.title)}
-                />
-            ))}
-        </ScrollContainer>
-    );
+  return (
+    <ScrollContainer>
+      {workouts.map((workout, index) => (
+        <WorkoutCard
+          key={index}
+          workout={workout}
+          onClick={() => console.log("Open workout:", workout.title)}
+        />
+      ))}
+    </ScrollContainer>
+  );
 }
 
 export default WorkoutGallery;
