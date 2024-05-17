@@ -1,25 +1,33 @@
 import React from "react";
-import WorkoutCard from "./WorkoutCard"; // Ensure this is the correct path
 import styled from "styled-components";
+import WorkoutCard from "../WorkoutCard";
+import { Text } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/provider";
 
 const ScrollContainer = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   overflow-x: auto;
   padding: 20px;
-  gap: 20px; // This adds space between the cards
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
 `;
 
 function WorkoutGallery({ workouts }) {
   return (
-    <ScrollContainer>
-      {workouts.map((workout, index) => (
-        <WorkoutCard
-          key={index}
-          workout={workout}
-          onClick={() => console.log("Open workout:", workout.title)}
-        />
-      ))}
-    </ScrollContainer>
+    <>
+      <ScrollContainer>
+        {workouts.map((workout, index) => (
+          <WorkoutCard
+            key={index}
+            workout={workout}
+            onClick={() => console.log("Open workout:", workout.title)}
+          />
+        ))}
+      </ScrollContainer>
+    </>
   );
 }
 

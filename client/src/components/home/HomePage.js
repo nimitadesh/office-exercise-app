@@ -1,4 +1,3 @@
-import WorkoutCard from "./WorkoutCard";
 import React, { useState, useEffect } from "react";
 import "../../styles/app-styles.css";
 import WorkoutPopup from "../workout/WorkoutPopup";
@@ -117,9 +116,9 @@ const HomePage = () => {
         <Box position="relative" height="auto">
           <HeroSection />
           <BannerText />
-          <Box position="absolute" top="850" left="0" right="0" bottom="0">
+          {/* <Box position="absolute" top="850" left="0" right="0" bottom="0">
             <BannerPic />
-          </Box>
+          </Box> */}
         </Box>
       </ChakraProvider>
 
