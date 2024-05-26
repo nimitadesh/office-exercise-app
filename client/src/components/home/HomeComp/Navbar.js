@@ -20,7 +20,7 @@ const {
 } = require("@chakra-ui/react");
 const { HamburgerIcon, CloseIcon } = require("@chakra-ui/icons");
 
-const Links = ["Home", "Workouts"];
+const Links = ["Home", "Workouts", "Chat"];
 
 const NavLink = (props) => {
   const { children } = props;

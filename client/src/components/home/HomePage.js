@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/app-styles.css";
 import WorkoutPopup from "../workout/WorkoutPopup";
-import { ChakraProvider, extendTheme, Box } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, Box, IconButton } from "@chakra-ui/react";
 import HeroSection from "./HomeComp/HeroSection";
 import Navbar from "./HomeComp/Navbar";
 import FooterSection from "./HomeComp/FooterSection";
 import BannerPic from "./HomeComp/Banner/BannerPic";
 import BannerText from "./HomeComp/Banner/BannerText";
 import WorkoutGallery from "./WorkoutGallery";
+import { Link } from "react-router-dom";
+import { TbMessageChatbot } from "react-icons/tb";
 
 const workouts = [
   {
@@ -139,6 +141,18 @@ const HomePage = () => {
       <ChakraProvider>
         {" "}
         <FooterSection />
+        <Box position="fixed" bottom={4} right={4}>
+          <Link to="/chatbot">
+            <IconButton
+              isRound={true}
+              aria-label="Chatbot"
+              colorScheme='teal'
+              size="lg"
+              fontSize="30px"
+              icon={<TbMessageChatbot />}
+            />
+          </Link>
+        </Box>
       </ChakraProvider>
     </div>
   );
