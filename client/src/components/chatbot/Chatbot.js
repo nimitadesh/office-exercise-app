@@ -1,15 +1,19 @@
 import { ChakraProvider, Box } from "@chakra-ui/react";
 import { useState } from "react";
-import axios from 'axios';
-import MessageList from './MessageList';
-import MessageInput from './MessageInput';
+import axios from "axios";
+import MessageList from "./MessageList";
+import MessageInput from "./MessageInput";
 import Navbar from "../home/HomeComp/Navbar";
-import FooterSection from "../home/HomeComp/FooterSection";
+import StatusModal from "../modal/StatusModal";
 
 const Chatbot = () => {
   const [userMessage, setUserMessage] = useState("");
   const [chatResponses, setChatResponses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalMessage, setModalMessage] = useState("");
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,19 +21,33 @@ const Chatbot = () => {
 
     setIsLoading(true);
     try {
-        const res = await axios.post('http://localhost:3001/chat', { userMessage: userMessage });
-        setChatResponses(prevResponses => [...prevResponses, { sender: 'user', text: userMessage }, { sender: 'bot', text: res.data.response }]);
-        setUserMessage("");
+      const res = await axios.post("http://localhost:3001/chat", {
+        userMessage: userMessage,
+      });
+      setChatResponses((prevResponses) => [
+        ...prevResponses,
+        { sender: "user", text: userMessage },
+        { sender: "bot", text: res.data.response },
+      ]);
+      await axios.post("http://localhost:3001/messages", {
+        userQuestion: userMessage,
+        botResponse: res.data.response,
+      })
+      setUserMessage("");
     } catch (error) {
-        console.error('Error:', error);
+      setModalTitle("Error");
+      setModalMessage("Chatbot failed to send message.");
+      setModalOpen(true);
+      console.error("Error:", error);
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
   return (
     <ChakraProvider>
-      <Navbar/>
+      <StatusModal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={modalTitle} message={modalMessage} />
+      <Navbar />
       <Box
         display="flex"
         flexDirection="column"
@@ -39,12 +57,14 @@ const Chatbot = () => {
         p={4}
       >
         <MessageList messages={chatResponses} isLoading={isLoading} />
-        <MessageInput userMessage={userMessage} setUserMessage={setUserMessage} handleSubmit={handleSubmit} />
+        <MessageInput
+          userMessage={userMessage}
+          setUserMessage={setUserMessage}
+          handleSubmit={handleSubmit}
+        />
       </Box>
     </ChakraProvider>
   );
 };
 
 export default Chatbot;
-
-

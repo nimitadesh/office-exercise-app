@@ -32,6 +32,7 @@ async function connectToDatabase() {
     app.use("/", require("./routes/AuthRoutes"));
     app.use("/users", require("./routes/UserRoutes"));
     app.use("/workouts", require("./routes/WorkoutRoutes"));
+    app.use("/messages", require("./routes/MessageRoutes"))
     app.use("/", require("./routes/Chat"));
 
     app.listen(port, () => {
