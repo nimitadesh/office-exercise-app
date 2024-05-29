@@ -7,8 +7,25 @@ import {
   Text,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 
 export default function SplitScreen() {
+  const navigate = useNavigate();
+
+  const navigateToLogin = () => {
+    navigate("/login");
+  };
+
+  const navigateToSignup = () => {
+    navigate("/signup");
+  };
+
   return (
     <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
       <Flex p={1} flex={1} align={"center"} justify={"center"}>
@@ -31,10 +48,13 @@ export default function SplitScreen() {
               _hover={{
                 bg: "blue.500",
               }}
+              onClick={navigateToLogin}
             >
               Login
             </Button>
-            <Button rounded={"full"}>Sign up</Button>
+            <Button rounded={"full"} onClick={navigateToSignup}>
+              Sign up
+            </Button>
           </Stack>
         </Stack>
       </Flex>

@@ -35,6 +35,14 @@ const workoutSchema = new mongoose.Schema({
     type: String,
   },
   exercises: [exerciseSchema],
+  duration: {
+    type: Number,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Workout", workoutSchema);

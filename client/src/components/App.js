@@ -4,6 +4,7 @@ import "../styles/fonts.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./log-in/Login";
 import Signup from "./sign-up/Signup";
+import WorkoutsPage from "./workout/WorkoutsPage";
 import Navbar from "./home/HomeComp/Navbar";
 import Chatbot from "./chatbot/Chatbot";
 
@@ -21,6 +22,7 @@ function App() {
         <Routes>{<Route path="/signup" element={<Signup />} />}</Routes>
         <Routes>{<Route path="/chatbot" element={<Chatbot />} />}</Routes>
         <Routes>{<Route path="/history" element={<ChatHistory />} />}</Routes>
+        <Routes>{<Route path="/workouts" element={<WorkoutsPage />} />}</Routes>
       </div>
     </BrowserRouter>
   );

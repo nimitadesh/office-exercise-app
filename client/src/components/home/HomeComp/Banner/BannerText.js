@@ -15,7 +15,7 @@ import styled from "styled-components";
 const ScrollContainer = styled.div`
   display: flex;
   overflow-x: auto;
-  padding-top: 6%;
+  padding-top: 1%;
   gap: 20px;
   justify-content: center;
 `;
@@ -23,14 +23,19 @@ const ScrollContainer = styled.div`
 export default function BannerText() {
   return (
     <Box>
-      <Container
-        h={"500px"}
-        maxW={"full"}
-        background="linear-gradient(135deg, #7EE8FA, #EEC0C6)"
-      >
+      <Container h={"600px"} maxW={"full"}>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Heading fontSize="3xl" margin="5% 0">
+            <Text as="span" color="blue.400">
+              Experience the benefits of incorporating simple exercises into
+              your workday.
+            </Text>
+          </Heading>
+        </Box>
+
         <ScrollContainer>
           <Box
-            width="450px"
+            width="350px"
             height="300px"
             boxShadow="0px 6px 8px rgba(0, 0, 0, 0.2)"
             flex="0 0 auto"

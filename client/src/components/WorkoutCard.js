@@ -12,6 +12,10 @@ import {
   ButtonGroup,
   ChakraProvider,
   Flex,
+  Tag,
+  Avatar,
+  TagLabel,
+  VStack,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import WorkoutPopup from "./workout/WorkoutPopup";
@@ -30,7 +34,10 @@ const WorkoutCard = ({ workout }) => {
           </Stack>
         </CardBody>
         <CardFooter>
-          <Flex justifyContent="center">
+          <VStack align="flex-start">
+            <Tag size="lg" colorScheme="red" borderRadius="full">
+              <TagLabel>{workout.category}</TagLabel>
+            </Tag>
             <Button
               variant="solid"
               bg="blue.400"
@@ -39,7 +46,7 @@ const WorkoutCard = ({ workout }) => {
             >
               Start
             </Button>
-          </Flex>
+          </VStack>
         </CardFooter>
       </Card>
       {isOpen && (

@@ -54,13 +54,12 @@ export default function Login() {
         },
         { withCredentials: true }
       );
-      console.log(data);
       const { success, message, user } = data;
       if (success) {
         localStorage.setItem("user", JSON.stringify(user));
         handleSuccess(message);
         setTimeout(() => {
-          navigate("/projects");
+          navigate("/workouts");
         }, 1000);
       } else {
         handleError(message);
@@ -116,6 +115,7 @@ export default function Login() {
               </Stack>
               <Stack pt={8}>
                 <Button
+                  type="submit"
                   bg={"blue.400"}
                   color={"white"}
                   _hover={{
