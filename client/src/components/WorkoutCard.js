@@ -25,9 +25,11 @@ import WorkoutPopup from "./workout/WorkoutPopup";
 const WorkoutCard = ({ workout }) => {
   const [isOpen, setIsOpen] = useState(false);
   const togglePopup = () => setIsOpen(!isOpen);
+  console.log("Categories");
+  console.log(workout.category);
   return (
     <ChakraProvider>
-      <Card maxW="sm">
+      <Card maxW="sm" h="500px">
         <CardBody>
           <Image src={workout.imageUrl} alt={workout.title} borderRadius="lg" />
           <Stack mt="6" spacing="3">
@@ -37,9 +39,11 @@ const WorkoutCard = ({ workout }) => {
         </CardBody>
         <CardFooter>
           <VStack align="flex-start">
-            <Tag size="lg" colorScheme="red" borderRadius="full">
-              <TagLabel>{workout.category}</TagLabel>
-            </Tag>
+            {workout.category.map((category, index) => (
+              <Tag key={index} size="lg" colorScheme="red" borderRadius="full">
+                <TagLabel>{category}</TagLabel>
+              </Tag>
+            ))}
             <Button
               variant="solid"
               bg="blue.400"

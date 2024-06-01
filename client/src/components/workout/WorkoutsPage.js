@@ -24,6 +24,7 @@ import {
 import WorkoutGallery from "../workout/WorkoutGallery";
 import Navbar from "../home/HomeComp/Navbar";
 import FooterSection from "../home/HomeComp/FooterSection";
+import Recommendations from "../recommendation/Recommendations";
 import { VisibilitySensor, Fade } from "react-visibility-sensor";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
@@ -94,16 +95,36 @@ const WorkoutsPage = () => {
         workout.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
         workout.duration >= minDuration &&
         workout.duration <= maxDuration &&
-        workout.category
-          .toLowerCase()
-          .includes(selectedWorkoutCategory.toLowerCase())
+        workout.category.some((category) => {
+          return category
+            .toLowerCase()
+            .includes(selectedWorkoutCategory.toLowerCase());
+        })
       );
     });
     setFilteredWorkouts(newWorkouts);
   };
 
   useEffect(() => {
-    fetch("http://localhost:3001/workouts")
+    if (user && user._id) {
+      fetch("http://localhost:3001/ratings/" + user._id)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to fetch user ratings");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user ratings:", error);
+        });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/workouts/")
       .then((res) => {
         return res.json();
       })
@@ -127,6 +148,7 @@ const WorkoutsPage = () => {
                 Hello, {user.firstName}.
               </Text>{" "}
             </Heading>
+            <Recommendations />
           </Box>
         ) : (
           <Heading
