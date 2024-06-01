@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button  } from "@chakra-ui/react"; // Importing Button and useDisclosure hook
+import { Box, Button } from "@chakra-ui/react"; // Importing Button and useDisclosure hook
 import {
   Modal,
   ModalOverlay,
@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import WorkoutStepper from "./WorkoutStepper";
 
-function WorkoutPopup({workout, isOpen, onClose}) {
+function WorkoutPopup({ workout, isOpen, onClose }) {
   const [playWorkout, setPlayWorkout] = useState(false);
   const finalRef = React.useRef(null);
 
@@ -29,10 +29,6 @@ function WorkoutPopup({workout, isOpen, onClose}) {
 
   return (
     <>
-      <Box ref={finalRef} tabIndex={-1} aria-label="Focus moved to this box">
-        Some other content that'll receive focus on close.
-      </Box>
-
       <Modal
         finalFocusRef={finalRef}
         isOpen={isOpen}
@@ -57,7 +53,7 @@ function WorkoutPopup({workout, isOpen, onClose}) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="green" mr={3} onClick={handleCloseModal}>
+            <Button colorScheme="blue" mr={3} onClick={handleCloseModal}>
               Close
             </Button>
             {!playWorkout && (
