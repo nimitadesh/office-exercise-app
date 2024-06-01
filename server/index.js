@@ -34,6 +34,7 @@ async function connectToDatabase() {
     app.use("/workouts", require("./routes/WorkoutRoutes"));
     app.use("/messages", require("./routes/MessageRoutes"))
     app.use("/", require("./routes/Chat"));
+    app.use("/ratings", require("./routes/RatingRoutes"));
 
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);

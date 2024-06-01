@@ -39,8 +39,16 @@ const workoutSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  category: {
+  intensity: {
     type: String,
+    required: true,
+  },
+  category: {
+    type: [String],
+    required: true,
+  },
+  equipment: {
+    type: [String],
     required: true,
   },
 });
