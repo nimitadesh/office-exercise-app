@@ -1,5 +1,5 @@
 import { ChakraProvider, Box } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import MessageList from "./MessageList";
 import MessageInput from "./MessageInput";
@@ -13,6 +13,13 @@ const Chatbot = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser)
+      setUser(storedUser)
+  }, [])
 
 
   const handleSubmit = async (e) => {
@@ -30,6 +37,7 @@ const Chatbot = () => {
         { sender: "bot", text: res.data.response },
       ]);
       await axios.post("http://localhost:3001/messages", {
+        userId: user,
         userQuestion: userMessage,
         botResponse: res.data.response,
       })
