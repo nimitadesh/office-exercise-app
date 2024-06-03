@@ -1,9 +1,23 @@
 const express = require('express');
+const multer = require('multer')
+const upload = multer({ dest: "uploads/"})
 const router = express.Router();
 const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require('@google/generative-ai');
+const { GoogleAIFileManager } = require('@google/generative-ai/files')
 
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
+const fileManager = new GoogleAIFileManager(apiKey);
+
+async function uploadToGemini(path, mimeType){
+  const uploadResult = await fileManager.uploadFile(path, {
+    mimeType: mimeType,
+    displayName: path,
+  })
+  
+  console.log(`Uploaded file ${uploadResult.file.displayName} as: ${uploadResult.file.uri}`);
+  return uploadResult;
+}
 
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-pro-latest",
@@ -37,37 +51,29 @@ const safetySettings = [
   },
 ];
 
-router.post('/chat', async (req, res) => {
+router.post('/chat', upload.single('doc'), async (req, res) => {
   const { userMessage } = req.body;
   if (!userMessage) {
     return res.status(400).json({ error: 'User message is required' });
   }
 
-  try {
-    const chatSession = model.startChat({
-      generationConfig,
-      safetySettings,
-      history: [
-        {
-          role: "user",
-          parts: [
-            { text: "How can I start a fitness routine?" },
-          ],
-        },
-        {
-          role: "model",
-          parts: [
-            { text: "Great question! Start small and focus on consistency:\n* **Set realistic goals:**  Begin with 2-3 workouts per week, 30 minutes each.\n* **Choose activities you enjoy:** Walking, jogging, dancing - find what motivates you.\n* **Plan your workouts:** Schedule them like appointments you can't miss. \n* **Gradual progression:** Slowly increase intensity and duration as you get fitter. You've got this! \n" },
-          ],
-        },
-      ],
-    });
-
-    const result = await chatSession.sendMessage(userMessage);
+  if (req.file) {
+    const doc = req.file;
+    const processedDoc = await uploadToGemini(doc.path, doc.mimetype);
+    
+    const result = await model.generateContent([
+      {
+        fileData: {
+          mimeType: processedDoc.file.mimeType,
+          fileUri: processedDoc.file.uri
+        }
+      },
+      { text: userMessage },
+    ])
     res.json({ response: result.response.text() });
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+  } else {
+    const result = await model.generateContent(userMessage);
+    res.json({ response: result.response.text() });
   }
 });
 
