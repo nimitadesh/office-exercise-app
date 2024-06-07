@@ -1,4 +1,4 @@
-import { FormControl, Input, Button, Flex } from "@chakra-ui/react";
+import { FormControl, Input, Button, VStack, HStack } from "@chakra-ui/react";
 
 const MessageInput = ({
   userMessage,
@@ -7,22 +7,15 @@ const MessageInput = ({
   inputFileRef,
   handleSubmit,
 }) => {
-  const handleFileClick = () => {
-    inputFileRef.current.click();
-  };
-
   return (
-      <FormControl as="form" onSubmit={handleSubmit} width="80%">
-        <Flex align="center" justify="space-between">
-          <Input
-            type="file"
-            onChange={(e) => setFile(e.target.files[0])}
-            ref={inputFileRef}
-            style={{ display: "none" }}
-          />
-          <Button onClick={handleFileClick} mr={2}>
-            Upload File
-          </Button>
+    <FormControl as="form" onSubmit={handleSubmit} width="80%">
+      <VStack spacing={4} align="stretch">
+        <Input
+          type="file"
+          onChange={(e) => setFile(e.target.files[0])}
+          ref={inputFileRef}
+        />
+        <HStack spacing={2} align="stretch">
           <Input
             placeholder="Message Chatbot"
             value={userMessage}
@@ -31,8 +24,9 @@ const MessageInput = ({
             flex="1"
           />
           <Button type="submit">Submit</Button>
-        </Flex>
-      </FormControl>
+        </HStack>
+      </VStack>
+    </FormControl>
   );
 };
 

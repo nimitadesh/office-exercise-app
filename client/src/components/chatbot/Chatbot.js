@@ -33,6 +33,7 @@ const Chatbot = () => {
       formData.append("userMessage", userMessage);
       if (file) formData.append("doc", file);
       const res = await axios.post("http://localhost:3001/chat", formData);
+      console.log(res.data.response)
       // const res = await axios.post("http://localhost:3001/chat", {
       //   userMessage: userMessage,
       // });

@@ -13,7 +13,6 @@ const MessageList = ({ messages, isLoading }) => {
     <Flex
       flexDirection="column"
       width="80%"
-      maxHeight="80vh"
       overflowY="auto"
       mb={4}
       position="relative"
