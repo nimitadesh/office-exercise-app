@@ -25,6 +25,7 @@ import WorkoutGallery from "../workout/WorkoutGallery";
 import Navbar from "../home/HomeComp/Navbar";
 import FooterSection from "../home/HomeComp/FooterSection";
 import Recommendations from "../recommendation/Recommendations";
+import UserStats from "../workout/UserStats";
 import { VisibilitySensor, Fade } from "react-visibility-sensor";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
