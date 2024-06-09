@@ -148,7 +148,6 @@ const WorkoutsPage = () => {
                 Hello, {user.firstName}.
               </Text>{" "}
             </Heading>
-            <Recommendations />
           </Box>
         ) : (
           <Heading
@@ -159,6 +158,7 @@ const WorkoutsPage = () => {
             Loading...
           </Heading>
         )}
+        <Recommendations/>
         <HStack marginTop="5%" spacing="25px" justifyContent="center">
           <InputGroup width="30%">
             <Input

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import RecommendationCard from "./RecommendationCard";
+import { VStack, HStack, Text } from "@chakra-ui/react";
 
 const Recommendations = () => {
   const [ratingsFromDb, setRatingsFromDb] = useState([]);
@@ -162,16 +164,14 @@ const Recommendations = () => {
   }, [recommendations]);
 
   return (
-    <div>
-      <h1>Recommended Workouts</h1>
-      <ul>
+    <VStack>
+      <Text>Here are your recommended workouts!</Text>
+      <HStack>
         {recommendations.map((rec, index) => (
-          <li key={index}>
-            {rec.workout.title} - Similarity: {rec.similarity.toFixed(2)}
-          </li>
+          <RecommendationCard recommendation={rec} />
         ))}
-      </ul>
-    </div>
+      </HStack>
+    </VStack>
   );
 };
 
