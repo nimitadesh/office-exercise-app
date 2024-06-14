@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Stack, Text } from "@chakra-ui/react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import styled from "@emotion/styled";
@@ -11,6 +11,32 @@ const AbsoluteCenter = styled.div`
 `;
 
 function WorkoutComplete({ workout }) {
+  useEffect(() => {
+    const createRating = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/ratings", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: "660374f51774b92c5b6e7dfd",
+            workoutId: workout._id,
+            rating: 3,
+          }),
+        });
+        if (!response.ok) {
+          throw new Error("Failed to create rating");
+        }
+      } catch (error) {
+        console.error("Error creating rating:", error);
+      }
+    };
+
+    // Call the async function to create a rating
+    createRating();
+  }, []);
+
   return (
     <>
       <Box position="relative" padding="8">

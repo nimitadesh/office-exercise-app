@@ -1,5 +1,5 @@
 import { ChakraProvider, Box } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import MessageList from "./MessageList";
 import MessageInput from "./MessageInput";
@@ -8,12 +8,20 @@ import StatusModal from "../modal/StatusModal";
 
 const Chatbot = () => {
   const [userMessage, setUserMessage] = useState("");
+  const [file, setFile] = useState(null);
+  const inputFileRef = useRef();
   const [chatResponses, setChatResponses] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
+  const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser)
+      setUser(storedUser)
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,18 +29,24 @@ const Chatbot = () => {
 
     setIsLoading(true);
     try {
-      const res = await axios.post("http://localhost:3001/chat", {
-        userMessage: userMessage,
-      });
+      const formData = new FormData();
+      formData.append("userMessage", userMessage);
+      if (file) formData.append("doc", file);
+      const res = await axios.post("http://localhost:3001/chat", formData);
+      // const res = await axios.post("http://localhost:3001/chat", {
+      //   userMessage: userMessage,
+      // });
       setChatResponses((prevResponses) => [
         ...prevResponses,
         { sender: "user", text: userMessage },
         { sender: "bot", text: res.data.response },
       ]);
       await axios.post("http://localhost:3001/messages", {
+        userId: user,
         userQuestion: userMessage,
         botResponse: res.data.response,
       })
+      inputFileRef.current.value = null;
       setUserMessage("");
     } catch (error) {
       setModalTitle("Error");
@@ -60,6 +74,8 @@ const Chatbot = () => {
         <MessageInput
           userMessage={userMessage}
           setUserMessage={setUserMessage}
+          setFile={setFile}
+          inputFileRef={inputFileRef}
           handleSubmit={handleSubmit}
         />
       </Box>

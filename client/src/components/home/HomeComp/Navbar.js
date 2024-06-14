@@ -25,6 +25,7 @@ const Links = [
   {name: "Workouts", path: "/workouts"},
   {name: "Chat", path: "/chatbot"},
   {name: "History", path: "/history"},
+  {name: "Dashboard", path: "/dashboard"}
 ];
 
 const NavLink = (props) => {

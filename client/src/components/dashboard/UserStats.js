@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   chakra,
@@ -44,7 +44,24 @@ function StatsCard({ title, stat, icon }) {
   );
 }
 
-export default function UserStats() {
+export default function UserStats({ userWorkouts, workouts }) {
+  const [user, setUser] = useState(null);
+  const calculatePointsEarned = () => {
+    let points = 0;
+    for (let i = 0; i < workouts.length; i++) {
+      points += workouts[i].points;
+    }
+    return points;
+  };
+
+  const calculateMinutesExercised = () => {
+    let duration = 0;
+    for (let i = 0; i < workouts.length; i++) {
+      duration += workouts[i].duration;
+    }
+    return duration;
+  };
+
   return (
     <Box maxW="7xl" mx={"auto"} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
       <chakra.h1
@@ -57,18 +74,18 @@ export default function UserStats() {
       </chakra.h1>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
-          title={"Users"}
-          stat={"5,000"}
+          title={"No. of Workouts Completed"}
+          stat={userWorkouts.length}
           icon={<BsPerson size={"3em"} />}
         />
         <StatsCard
-          title={"Servers"}
-          stat={"1,000"}
+          title={"No. of Points Earned"}
+          stat={calculatePointsEarned()}
           icon={<FiServer size={"3em"} />}
         />
         <StatsCard
-          title={"Datacenters"}
-          stat={"7"}
+          title={"No. of Minutes Exercised"}
+          stat={calculateMinutesExercised()}
           icon={<GoLocation size={"3em"} />}
         />
       </SimpleGrid>

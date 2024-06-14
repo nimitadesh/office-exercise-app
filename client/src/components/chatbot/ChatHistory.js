@@ -15,12 +15,14 @@ const ChatHistory = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    fetchMessages();
-  }, []);
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser)
+      fetchMessages(storedUser._id)
+  },[])
 
-  const fetchMessages = async () => {
+  const fetchMessages = async (userId) => {
     try {
-      const response = await axios.get("http://localhost:3001/messages");
+      const response = await axios.get("http://localhost:3001/messages/" + userId);
       setMessages(response.data);
     } catch (error) {
       console.error("Error fetching messages:", error);

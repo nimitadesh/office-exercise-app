@@ -12,6 +12,7 @@ import HomePage from "./home/HomePage";
 import "@fontsource/inria-sans";
 import "@fontsource/inria-sans/300-italic.css";
 import ChatHistory from "./chatbot/ChatHistory";
+import UserDashboard from "./dashboard/UserDashboard";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Routes>{<Route path="/chatbot" element={<Chatbot />} />}</Routes>
         <Routes>{<Route path="/history" element={<ChatHistory />} />}</Routes>
         <Routes>{<Route path="/workouts" element={<WorkoutsPage />} />}</Routes>
+        <Routes>{<Route path="/dashboard" element={<UserDashboard />} />}</Routes>
       </div>
     </BrowserRouter>
   );

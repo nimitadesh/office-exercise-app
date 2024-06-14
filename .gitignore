@@ -1,4 +1,5 @@
 .idea
 server/node_modules
 server/.env
+server/uploads
 .DS_Store
