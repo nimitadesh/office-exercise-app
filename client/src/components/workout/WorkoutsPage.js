@@ -180,7 +180,10 @@ const WorkoutsPage = () => {
             onChange={handleSelectedWorkoutCategoryChange}
           >
             <option value="Desk Stretch">Desk Stretch</option>
+            <option value="Mobility">Mobility</option>
             <option value="Meditation">Meditation</option>
+            <option value="Bodyweight">Bodyweight</option>
+            <option value="Cardio">Cardio</option>
           </Select>
           <>
             <NumberInput

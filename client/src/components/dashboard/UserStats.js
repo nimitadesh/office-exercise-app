@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import {
   Box,
   chakra,
@@ -44,22 +45,25 @@ function StatsCard({ title, stat, icon }) {
   );
 }
 
-export default function UserStats({ userWorkouts, workouts }) {
-  const [user, setUser] = useState(null);
+StatsCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  stat: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  icon: PropTypes.element.isRequired,
+};
+
+export default function UserStats({ currUser, userWorkouts }) {
   const calculatePointsEarned = () => {
-    let points = 0;
-    for (let i = 0; i < workouts.length; i++) {
-      points += workouts[i].points;
-    }
-    return points;
+    return userWorkouts.reduce(
+      (total, userWorkout) => (total += userWorkout.workoutId.points),
+      0
+    );
   };
 
   const calculateMinutesExercised = () => {
-    let duration = 0;
-    for (let i = 0; i < workouts.length; i++) {
-      duration += workouts[i].duration;
-    }
-    return duration;
+    return userWorkouts.reduce(
+      (total, userWorkout) => (total += userWorkout.workoutId.duration),
+      0
+    );
   };
 
   return (
@@ -70,7 +74,7 @@ export default function UserStats({ userWorkouts, workouts }) {
         py={10}
         fontWeight={"bold"}
       >
-        Our company is expanding, you could be too.
+        Stats for {currUser.firstName} {currUser.lastName}
       </chakra.h1>
       <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
         <StatsCard
@@ -92,3 +96,12 @@ export default function UserStats({ userWorkouts, workouts }) {
     </Box>
   );
 }
+
+UserStats.propTypes = {
+  currUser: PropTypes.shape({
+    firstName: PropTypes.string.isRequired,
+    lastName: PropTypes.string.isRequired,
+  }).isRequired,
+  userWorkouts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  workouts: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
