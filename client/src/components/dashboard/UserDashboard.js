@@ -1,8 +1,9 @@
-import { ChakraProvider, Box } from "@chakra-ui/react";
+import { ChakraProvider, Grid, Box, Text } from "@chakra-ui/react";
 import Navbar from "../home/HomeComp/Navbar";
 import UserStats from "./UserStats";
 import React, { useState, useEffect } from "react";
 import DurationTime from "./barchart/DurationTimeGraph";
+import { CategoryGraph } from "./piechart/CategoryGraph";
 import { generateDurationTimeData } from "./barchart/DurationTimeData";
 import { generateCategoryData } from "./piechart/CategoryData";
 import FooterSection from "../home/HomeComp/FooterSection";
@@ -45,8 +46,10 @@ const UserDashboard = () => {
       setDurationTimeData(generatedDurationTimeData);
       const generatedCategoryData = generateCategoryData(userWorkouts);
       setCategoryData(generatedCategoryData);
-      console.log("Generated Category Data");
-      console.log(categoryData);
+      console.log("Generated Duration Time Data:", generatedDurationTimeData);
+      console.log("Generated Category Data:", generatedCategoryData);
+    } else {
+      console.log("No user workouts to generate data from");
     }
   }, [userWorkouts]);
 
@@ -54,7 +57,35 @@ const UserDashboard = () => {
     <ChakraProvider>
       <Navbar />
       {user && <UserStats currUser={user} userWorkouts={userWorkouts} />}
-      <DurationTime durationTimeData={durationTimeData} />
+      <Grid
+        templateColumns="2fr 1fr"
+        gap={18}
+        marginTop="5%"
+        marginBottom="5%"
+        marginLeft="5%"
+        marginRight="5%"
+      >
+        <Box height="450px">
+          <Text fontSize="xl" textAlign="center">
+            Your Past Week at a Glance
+          </Text>
+          {durationTimeData.length > 0 ? (
+            <DurationTime durationTimeData={durationTimeData} />
+          ) : (
+            <p>No duration time data available</p>
+          )}
+        </Box>
+        <Box height="450px">
+          <Text fontSize="xl" textAlign="center">
+            Overall Workout Category Distribution
+          </Text>
+          {categoryData.length > 0 ? (
+            <CategoryGraph categoryData={categoryData} />
+          ) : (
+            <p>No category data available</p>
+          )}
+        </Box>
+      </Grid>
       <FooterSection />
     </ChakraProvider>
   );

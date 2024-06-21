@@ -1,40 +1,38 @@
 export const generateCategoryData = (userWorkouts) => {
   const categoryData = [];
 
-  // Function to check if an object with a specific id exists
   const objectIdExists = (dataArray, id) => {
     return dataArray.some((obj) => obj.id === id);
   };
 
-  // Function to increment the value of an existing object
-  const incrementValue = (dataArray, id) => {
-    dataArray.forEach((obj) => {
+  const incrementValue = (categoryData, id, currWorkoutCategories) => {
+    categoryData.forEach((obj) => {
       if (obj.id === id) {
-        obj.value++;
+        obj.value = obj.value + 1 / currWorkoutCategories.length;
       }
     });
   };
 
   if (Array.isArray(userWorkouts) && userWorkouts.length > 0) {
     userWorkouts.forEach((userWorkout) => {
-      if (userWorkout.category && Array.isArray(userWorkout.category)) {
-        userWorkout.workoutId.category.forEach((cat) => {
-          if (objectIdExists(categoryData, cat)) {
-            incrementValue(categoryData, cat);
-          } else {
-            categoryData.push({
-              id: cat,
-              label: cat,
-              value: 1, // Initialize value to 1 when adding a new object
-            });
-          }
-        });
-      } else {
-        console.warn(
-          "Category array is missing or not an array in userWorkout:",
-          userWorkout
-        );
-      }
+      let currWorkoutCategories = userWorkout.workoutId.category;
+      currWorkoutCategories.forEach((cat) => {
+        if (objectIdExists(categoryData, cat)) {
+          incrementValue(categoryData, cat, currWorkoutCategories);
+        } else {
+          categoryData.push({
+            id: cat,
+            label: cat,
+            value: 1 / currWorkoutCategories.length,
+          });
+        }
+      });
+    });
+
+    // Convert values to percentages and round to two decimal places
+    const totalValue = categoryData.reduce((sum, obj) => sum + obj.value, 0);
+    categoryData.forEach((obj) => {
+      obj.value = parseFloat(((obj.value / totalValue) * 100).toFixed(2));
     });
   } else {
     console.error("userWorkouts is not defined, not an array, or empty");

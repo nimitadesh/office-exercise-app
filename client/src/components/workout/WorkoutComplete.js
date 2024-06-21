@@ -11,6 +11,21 @@ const AbsoluteCenter = styled.div`
 `;
 
 function WorkoutComplete({ workout }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      console.log("User state variable set:", user); // Log the user state after it is set
+    }
+  }, [user]);
+
   useEffect(() => {
     const createRating = async () => {
       try {
@@ -20,7 +35,7 @@ function WorkoutComplete({ workout }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userId: "660374f51774b92c5b6e7dfd",
+            userId: user._id,
             workoutId: workout._id,
             rating: 3,
           }),
@@ -35,7 +50,7 @@ function WorkoutComplete({ workout }) {
 
     // Call the async function to create a rating
     createRating();
-  }, []);
+  }, [user]);
 
   return (
     <>

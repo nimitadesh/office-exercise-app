@@ -19,13 +19,14 @@ const {
   Stack,
 } = require("@chakra-ui/react");
 const { HamburgerIcon, CloseIcon } = require("@chakra-ui/icons");
+const { useNavigate } = require("react-router-dom");
 
 const Links = [
-  {name: "Home", path: "/"},
-  {name: "Workouts", path: "/workouts"},
-  {name: "Chat", path: "/chatbot"},
-  {name: "History", path: "/history"},
-  {name: "Dashboard", path: "/dashboard"}
+  { name: "Home", path: "/" },
+  { name: "Workouts", path: "/workouts" },
+  { name: "Chat", path: "/chatbot" },
+  { name: "History", path: "/history" },
+  { name: "Dashboard", path: "/dashboard" },
 ];
 
 const NavLink = (props) => {
@@ -50,6 +51,12 @@ const NavLink = (props) => {
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/");
+  };
 
   return (
     <>
@@ -69,7 +76,9 @@ const Navbar = () => {
               display={{ base: "none", md: "flex" }}
             >
               {Links.map((link) => (
-                <NavLink key={link.name} to={link.path}>{link.name}</NavLink>
+                <NavLink key={link.name} to={link.path}>
+                  {link.name}
+                </NavLink>
               ))}
             </HStack>
           </HStack>
@@ -90,10 +99,7 @@ const Navbar = () => {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
@@ -103,7 +109,9 @@ const Navbar = () => {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
               {Links.map((link) => (
-                <NavLink key={link.name} to={link.path}>{link.name}</NavLink>
+                <NavLink key={link.name} to={link.path}>
+                  {link.name}
+                </NavLink>
               ))}
             </Stack>
           </Box>
