@@ -7,8 +7,16 @@ const Recommendations = () => {
   const [itemProfiles, setItemProfiles] = useState([]);
   const [normalizedUserRatings, setNormalizedUserRatings] = useState([]);
   const [userProfile, setUserProfile] = useState([]);
-  const [unratedWorkouts, setUnratedWorkouts] = useState([]);
+  const [workouts, setWorkouts] = useState([]);
   const [recommendations, setRecommendations] = useState([]);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
 
   // Function to convert workouts to item profile vectors
   function encodeWorkout(workout) {
@@ -45,51 +53,51 @@ const Recommendations = () => {
 
   // Fetch the ratings array for this specific user
   useEffect(() => {
-    fetch("http://localhost:3001/ratings/660374f51774b92c5b6e7dfd")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch user ratings");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setRatingsFromDb(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching user ratings:", error);
-      });
-  }, []);
+    if (user) {
+      fetch("http://localhost:3001/ratings/" + user._id)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to fetch user ratings");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setRatingsFromDb(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching user ratings:", error);
+        });
+    }
+  }, [user]);
 
   // Fetch the workouts for each rating and encode them
   useEffect(() => {
     if (ratingsFromDb.length > 0) {
       const fetchWorkouts = async () => {
-        const profiles = await Promise.all(
-          ratingsFromDb.map(async (rating) => {
-            try {
-              const res = await fetch(
-                "http://localhost:3001/workouts/" + rating.workoutId
-              );
-              if (!res.ok) {
-                throw new Error("Failed to fetch workout");
-              }
-              const workout = await res.json();
+        const profiles = [];
+        const normalizedRatings = [];
 
-              // Update normalizedUserRatings immutably
-              setNormalizedUserRatings((prevState) => [
-                ...prevState,
-                rating.rating - 3,
-              ]);
-
-              return encodeWorkout(workout);
-            } catch (error) {
-              console.error("Error fetching workout", error);
-              return null;
+        for (const rating of ratingsFromDb) {
+          try {
+            const res = await fetch(
+              "http://localhost:3001/workouts/" + rating.workoutId._id
+            );
+            if (!res.ok) {
+              throw new Error("Failed to fetch workout");
             }
-          })
-        );
-        setItemProfiles(profiles.filter((profile) => profile !== null));
+            const workout = await res.json();
+
+            profiles.push(encodeWorkout(workout));
+            normalizedRatings.push(rating.rating - 3);
+          } catch (error) {
+            console.error("Error fetching workout", error);
+          }
+        }
+
+        setItemProfiles(profiles);
+        setNormalizedUserRatings(normalizedRatings);
       };
+
       fetchWorkouts();
     }
   }, [ratingsFromDb]);
@@ -111,7 +119,7 @@ const Recommendations = () => {
     }
   }, [itemProfiles, normalizedUserRatings]);
 
-  // Fetch unrated workouts
+  // Fetch all workouts
   useEffect(() => {
     fetch("http://localhost:3001/workouts")
       .then((res) => {
@@ -121,16 +129,12 @@ const Recommendations = () => {
         return res.json();
       })
       .then((data) => {
-        const ratedWorkoutIds = new Set(ratingsFromDb.map((r) => r.workoutId));
-        const unrated = data.filter(
-          (workout) => !ratedWorkoutIds.has(workout._id)
-        );
-        setUnratedWorkouts(unrated);
+        setWorkouts(data);
       })
       .catch((error) => {
         console.error("Error fetching workouts:", error);
       });
-  }, [ratingsFromDb]);
+  }, []);
 
   // Calculate cosine similarity
   function cosineSimilarity(vectorA, vectorB) {
@@ -145,18 +149,25 @@ const Recommendations = () => {
 
   // Generate recommendations
   useEffect(() => {
-    if (userProfile.length > 0 && unratedWorkouts.length > 0) {
-      const recommendations = unratedWorkouts
+    if (userProfile.length > 0 && workouts.length > 0) {
+      const ratedWorkoutIds = new Set(
+        ratingsFromDb.map((r) => r.workoutId._id)
+      );
+      const recommendations = workouts
+        .filter((workout) => !ratedWorkoutIds.has(workout._id)) // Only include unrated workouts
         .map((workout) => {
           const workoutProfile = encodeWorkout(workout);
           const similarity = cosineSimilarity(userProfile, workoutProfile);
-          return { workout, similarity };
+          return {
+            workout,
+            similarity,
+          };
         })
         .sort((a, b) => b.similarity - a.similarity);
 
       setRecommendations(recommendations);
     }
-  }, [userProfile, unratedWorkouts]);
+  }, [userProfile, workouts, ratingsFromDb]);
 
   // Log recommendations to verify
   useEffect(() => {

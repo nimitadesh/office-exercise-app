@@ -20,11 +20,13 @@ import {
   NumberDecrementStepper,
   Select,
   HStack,
+  VStack,
 } from "@chakra-ui/react";
 import WorkoutGallery from "../workout/WorkoutGallery";
 import Navbar from "../home/HomeComp/Navbar";
 import FooterSection from "../home/HomeComp/FooterSection";
 import Recommendations from "../recommendation/Recommendations";
+import UserStats from "../dashboard/UserStats";
 import { VisibilitySensor, Fade } from "react-visibility-sensor";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
@@ -44,6 +46,7 @@ const WorkoutsPage = () => {
   const [filteredWorkouts, setFilteredWorkouts] = useState([]);
   const [minDuration, setMinDuration] = useState(0);
   const [maxDuration, setMaxDuration] = useState(0);
+  const [maxDurationDb, setMaxDurationDb] = useState(0);
   const [selectedWorkoutCategory, setSelectedWorkoutCategory] = useState("");
 
   const handleKeyDown = (e) => {
@@ -58,14 +61,6 @@ const WorkoutsPage = () => {
       setUser(storedUser);
     }
   }, []);
-
-  const onChange = (visible) => {
-    setIsVisible(visible);
-  };
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
 
   const handleMinDurationChange = (value) => {
     setMinDuration(value);
@@ -83,7 +78,7 @@ const WorkoutsPage = () => {
   const clearFilters = () => {
     setSearchTerm("");
     setMinDuration(0);
-    setMaxDuration(0);
+    setMaxDuration(maxDurationDb);
     setSelectedWorkoutCategory("");
     setFilteredWorkouts(workoutsFromDb);
   };
@@ -131,6 +126,9 @@ const WorkoutsPage = () => {
       .then((data) => {
         setWorkoutsFromDb(data);
         setFilteredWorkouts(data);
+        const maxDur = Math.max(...data.map((workout) => workout.duration));
+        setMaxDuration(maxDur);
+        setMaxDurationDb(maxDur);
       });
   }, []);
 
@@ -158,19 +156,22 @@ const WorkoutsPage = () => {
             Loading...
           </Heading>
         )}
-        <Recommendations/>
-        <HStack marginTop="5%" spacing="25px" justifyContent="center">
-          <InputGroup width="30%">
-            <Input
-              pr="4.5rem"
-              type="text"
-              placeholder="Search for a workout..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <InputRightElement width="4rem"></InputRightElement>
-          </InputGroup>
+        <HStack marginTop="5%" spacing="30px" justifyContent="center">
+          <Recommendations/>
+          
+          <Box width="25%">
+            <InputGroup>
+              <Input
+                pr="4.5rem"
+                type="text"
+                placeholder="Search for a workout..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleKeyDown}
+              />
+              <InputRightElement width="4rem"></InputRightElement>
+            </InputGroup>
+          </Box>
           <Select
             variant="outline"
             placeholder="Workout Category"
@@ -179,7 +180,10 @@ const WorkoutsPage = () => {
             onChange={handleSelectedWorkoutCategoryChange}
           >
             <option value="Desk Stretch">Desk Stretch</option>
+            <option value="Mobility">Mobility</option>
             <option value="Meditation">Meditation</option>
+            <option value="Bodyweight">Bodyweight</option>
+            <option value="Cardio">Cardio</option>
           </Select>
           <>
             <NumberInput
@@ -193,7 +197,7 @@ const WorkoutsPage = () => {
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
-            <p>to</p>
+            <p> min to</p>
             <NumberInput
               width="5%"
               value={maxDuration}
@@ -206,6 +210,7 @@ const WorkoutsPage = () => {
               </NumberInputStepper>
             </NumberInput>
           </>
+          <p> min</p>
           <Button
             variant="solid"
             bg="blue.400"

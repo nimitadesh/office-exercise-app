@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 const Timer = ({ onTimerReset }) => {
-  const [time, setTime] = useState(5); // Initial time set to 15 seconds
+  const [time, setTime] = useState(1);
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const Timer = ({ onTimerReset }) => {
   useEffect(() => {
     if (time === 0) {
       clearInterval(intervalRef.current);
-      setTime(5); // Reset time to 15 seconds
+      setTime(1); // Reset time to 15 seconds
       intervalRef.current = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
       }, 1000);
