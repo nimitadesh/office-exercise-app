@@ -24,7 +24,9 @@ function App() {
         <Routes>{<Route path="/chatbot" element={<Chatbot />} />}</Routes>
         <Routes>{<Route path="/history" element={<ChatHistory />} />}</Routes>
         <Routes>{<Route path="/workouts" element={<WorkoutsPage />} />}</Routes>
-        <Routes>{<Route path="/dashboard" element={<UserDashboard />} />}</Routes>
+        <Routes>
+          {<Route path="/dashboard" element={<UserDashboard />} />}
+        </Routes>
       </div>
     </BrowserRouter>
   );

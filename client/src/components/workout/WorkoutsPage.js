@@ -29,6 +29,7 @@ import Recommendations from "../recommendation/Recommendations";
 import UserStats from "../dashboard/UserStats";
 import { VisibilitySensor, Fade } from "react-visibility-sensor";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import NotificationSchedulerPopup from "./NotificationSchedulerPopup";
 
 const theme = extendTheme({
   fonts: {
@@ -38,7 +39,6 @@ const theme = extendTheme({
 });
 
 const WorkoutsPage = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [workoutsFromDb, setWorkoutsFromDb] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
   const [user, setUser] = useState(null);
@@ -48,6 +48,9 @@ const WorkoutsPage = () => {
   const [maxDuration, setMaxDuration] = useState(0);
   const [maxDurationDb, setMaxDurationDb] = useState(0);
   const [selectedWorkoutCategory, setSelectedWorkoutCategory] = useState("");
+
+  const [isOpen, setIsOpen] = useState(false);
+  const togglePopup = () => setIsOpen(!isOpen);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -146,6 +149,15 @@ const WorkoutsPage = () => {
                 Hello, {user.firstName}.
               </Text>{" "}
             </Heading>
+            <Button
+              variant="solid"
+              bg="blue.400"
+              color="white"
+              mt={4}
+              onClick={() => setIsOpen(true)}
+            >
+              Schedule Notifications
+            </Button>
           </Box>
         ) : (
           <Heading
@@ -157,8 +169,8 @@ const WorkoutsPage = () => {
           </Heading>
         )}
         <HStack marginTop="5%" spacing="30px" justifyContent="center">
-          <Recommendations/>
-          
+          {/* <Recommendations/> */}
+
           <Box width="25%">
             <InputGroup>
               <Input
@@ -233,6 +245,9 @@ const WorkoutsPage = () => {
         </Box>
 
         <FooterSection />
+        {isOpen && (
+          <NotificationSchedulerPopup isOpen={isOpen} onClose={togglePopup} />
+        )}
       </ChakraProvider>
     </div>
   );

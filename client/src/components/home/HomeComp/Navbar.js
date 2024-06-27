@@ -22,7 +22,6 @@ const { HamburgerIcon, CloseIcon } = require("@chakra-ui/icons");
 const { useNavigate } = require("react-router-dom");
 
 const Links = [
-  { name: "Home", path: "/" },
   { name: "Workouts", path: "/workouts" },
   { name: "Chat", path: "/chatbot" },
   { name: "History", path: "/history" },
