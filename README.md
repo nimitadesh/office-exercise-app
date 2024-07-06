@@ -17,10 +17,10 @@ If you run into any issues with the following steps, please feel free to reach o
 ```
 
 3. Open the project in VS Code
-4. Open a new terminal tab in VS Code and type the following command to checkout the latest branch
+4. Open a new terminal tab in VS Code and type the following command to checkout the main branch
 
 ```
-  git checkout nimita/workout-notifications
+  git checkout main
 ```
 
 ## 2. Adding the .env file
