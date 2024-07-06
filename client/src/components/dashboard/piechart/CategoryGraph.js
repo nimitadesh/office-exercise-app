@@ -1,6 +1,8 @@
 import { ResponsivePie } from "@nivo/pie";
 import { Box } from "@chakra-ui/react";
 
+const customColors = ["#648FFF", "#785EF0", "#DC267F", "#FE6100", "#FFB000"];
+
 export const CategoryGraph = ({ categoryData }) => (
   <ResponsivePie
     data={categoryData}
@@ -10,6 +12,7 @@ export const CategoryGraph = ({ categoryData }) => (
     cornerRadius={3}
     activeOuterRadiusOffset={8}
     borderWidth={1}
+    colors={customColors}
     borderColor={{
       from: "color",
       modifiers: [["darker", 0.2]],
@@ -43,55 +46,9 @@ export const CategoryGraph = ({ categoryData }) => (
         spacing: 10,
       },
     ]}
-    fill={[
-      {
-        match: {
-          id: "ruby",
-        },
-        id: "dots",
-      },
-      {
-        match: {
-          id: "c",
-        },
-        id: "dots",
-      },
-      {
-        match: {
-          id: "go",
-        },
-        id: "dots",
-      },
-      {
-        match: {
-          id: "python",
-        },
-        id: "dots",
-      },
-      {
-        match: {
-          id: "scala",
-        },
-        id: "lines",
-      },
-      {
-        match: {
-          id: "lisp",
-        },
-        id: "lines",
-      },
-      {
-        match: {
-          id: "elixir",
-        },
-        id: "lines",
-      },
-      {
-        match: {
-          id: "javascript",
-        },
-        id: "lines",
-      },
-    ]}
+    fill={categoryData.map((dataItem, index) => ({
+      match: { id: dataItem.id },
+      id: customColors[index % customColors.length], // Assign color from customColors
+    }))}
   />
 );

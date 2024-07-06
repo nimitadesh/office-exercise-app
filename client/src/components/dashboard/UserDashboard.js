@@ -44,7 +44,17 @@ const UserDashboard = () => {
     if (userWorkouts.length > 0) {
       const generatedDurationTimeData = generateDurationTimeData(userWorkouts);
       setDurationTimeData(generatedDurationTimeData);
-      const generatedCategoryData = generateCategoryData(userWorkouts);
+      const customColors = [
+        "#648FFF",
+        "#785EF0",
+        "#DC267F",
+        "#FE6100",
+        "#FFB000",
+      ];
+      const generatedCategoryData = generateCategoryData(
+        userWorkouts,
+        customColors
+      );
       setCategoryData(generatedCategoryData);
       console.log("Generated Duration Time Data:", generatedDurationTimeData);
       console.log("Generated Category Data:", generatedCategoryData);

@@ -49,8 +49,10 @@ const WorkoutsPage = () => {
   const [maxDurationDb, setMaxDurationDb] = useState(0);
   const [selectedWorkoutCategory, setSelectedWorkoutCategory] = useState("");
 
-  const [isOpen, setIsOpen] = useState(false);
-  const togglePopup = () => setIsOpen(!isOpen);
+  const [isNotificationSchedulerOpen, setIsNotificationSchedulerOpen] =
+    useState(false);
+  const toggleNotifPopup = () =>
+    setIsNotificationSchedulerOpen(!isNotificationSchedulerOpen);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -154,7 +156,7 @@ const WorkoutsPage = () => {
               bg="blue.400"
               color="white"
               mt={4}
-              onClick={() => setIsOpen(true)}
+              onClick={() => setIsNotificationSchedulerOpen(true)}
             >
               Schedule Notifications
             </Button>
@@ -245,8 +247,11 @@ const WorkoutsPage = () => {
         </Box>
 
         <FooterSection />
-        {isOpen && (
-          <NotificationSchedulerPopup isOpen={isOpen} onClose={togglePopup} />
+        {isNotificationSchedulerOpen && (
+          <NotificationSchedulerPopup
+            isOpen={isNotificationSchedulerOpen}
+            onClose={toggleNotifPopup}
+          />
         )}
       </ChakraProvider>
     </div>

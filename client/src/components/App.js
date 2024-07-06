@@ -7,6 +7,7 @@ import Signup from "./sign-up/Signup";
 import WorkoutsPage from "./workout/WorkoutsPage";
 import Navbar from "./home/HomeComp/Navbar";
 import Chatbot from "./chatbot/Chatbot";
+import ProfilePage from "./profile/ProfilePage";
 
 import HomePage from "./home/HomePage";
 import "@fontsource/inria-sans";
@@ -24,6 +25,7 @@ function App() {
         <Routes>{<Route path="/chatbot" element={<Chatbot />} />}</Routes>
         <Routes>{<Route path="/history" element={<ChatHistory />} />}</Routes>
         <Routes>{<Route path="/workouts" element={<WorkoutsPage />} />}</Routes>
+        <Routes>{<Route path="/profile" element={<ProfilePage />} />}</Routes>
         <Routes>
           {<Route path="/dashboard" element={<UserDashboard />} />}
         </Routes>

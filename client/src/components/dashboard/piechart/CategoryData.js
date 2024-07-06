@@ -1,4 +1,4 @@
-export const generateCategoryData = (userWorkouts) => {
+export const generateCategoryData = (userWorkouts, customColors) => {
   const categoryData = [];
 
   const objectIdExists = (dataArray, id) => {
@@ -33,6 +33,11 @@ export const generateCategoryData = (userWorkouts) => {
     const totalValue = categoryData.reduce((sum, obj) => sum + obj.value, 0);
     categoryData.forEach((obj) => {
       obj.value = parseFloat(((obj.value / totalValue) * 100).toFixed(2));
+    });
+
+    // Assign colors from customColors based on id matching
+    categoryData.forEach((obj, index) => {
+      obj.color = customColors[index % customColors.length]; // Use modulus to cycle through customColors if needed
     });
   } else {
     console.error("userWorkouts is not defined, not an array, or empty");

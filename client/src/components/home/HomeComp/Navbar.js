@@ -52,6 +52,10 @@ const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
+  const handleProfile = () => {
+    navigate("/profile");
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/");
@@ -98,6 +102,7 @@ const Navbar = () => {
                 />
               </MenuButton>
               <MenuList>
+                <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
               </MenuList>
             </Menu>
