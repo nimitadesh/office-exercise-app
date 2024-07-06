@@ -12,21 +12,31 @@ import {
 } from "@chakra-ui/react";
 import styled from "styled-components";
 
+const StyledBox = styled(Box)`
+  background: linear-gradient(
+    135deg,
+    #37d5d6,
+    #36096d
+  ); /* Define your gradient colors */
+  padding: 20px; /* Adjust padding as needed */
+`;
+
 const ScrollContainer = styled.div`
   display: flex;
   overflow-x: auto;
   padding-top: 1%;
   gap: 20px;
   justify-content: center;
+  padding: 20px;
 `;
 
 export default function BannerText() {
   return (
-    <Box>
+    <StyledBox>
       <Container h={"600px"} maxW={"full"}>
         <Box display="flex" justifyContent="center" alignItems="center">
           <Heading fontSize="3xl" margin="5% 0">
-            <Text as="span" color="blue.400">
+            <Text as="span" color="white">
               Experience the benefits of incorporating simple exercises into
               your workday.
             </Text>
@@ -140,6 +150,6 @@ export default function BannerText() {
           </Box>
         </ScrollContainer>
       </Container>
-    </Box>
+    </StyledBox>
   );
 }

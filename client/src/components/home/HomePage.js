@@ -34,27 +34,16 @@ const HomePage = () => {
     <ChakraProvider backgroundColor="#57663D">
       <Box>
         <HeroSection />
-        <Box
-          background="linear-gradient(135deg, #37D5D6, #36096D)"
-          paddingBottom="30"
-        >
-          <Box textAlign="center" paddingTop="5%">
-            <Heading fontSize="4xl" color="#949494">
-              <Text as="span" color="white">
-                Check out some of our free workouts!
-              </Text>
-            </Heading>
-          </Box>
-          {workoutsFromDb.length > 0 && (
-            <Box display="flex" justifyContent="center">
-              <WorkoutGallery workouts={workoutsFromDb.slice(0, 3)} />
-            </Box>
-          )}
-        </Box>
 
         <BannerText />
         <FooterSection />
-        <Box position="fixed" bottom={4} right={4}>
+        <Box
+          position="fixed"
+          bottom={4}
+          right={4}
+          background="linear-gradient(135deg, #37D5D6, #36096D)"
+          paddingBottom="30"
+        >
           <Link to="/chatbot">
             <IconButton
               isRound={true}

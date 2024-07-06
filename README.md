@@ -13,7 +13,7 @@ If you run into any issues with the following steps, please feel free to reach o
 2. Enter the following command to clone the repo:
 
 ```
-  git clone https://github.com/nimitadesh/office-workout-app.git
+  git clone https://github.com/nimitadesh/office-exercise-app
 ```
 
 3. Open the project in VS Code
