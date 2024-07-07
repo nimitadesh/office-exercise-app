@@ -1,4 +1,4 @@
-server/models/Playlist.jsconst mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 const playlistSchema = new mongoose.Schema({
   title: {
